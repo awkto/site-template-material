@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaseTen - Infrastructure Consulting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', -apple-system, sans-serif;
+            background: #f5f5f5;
+            color: #212121;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        header {
+            background: #6200ea;
+            color: white;
+            padding: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 8px;
+        }
+        nav a {
+            padding: 8px 16px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 4px;
+            transition: background 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+        nav a:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+        nav a span {
+            position: relative;
+            z-index: 1;
+        }
+        .hero {
+            background: linear-gradient(135deg, #6200ea 0%, #9c27b0 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .hero h2 {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 32px;
+            opacity: 0.95;
+        }
+        .hero-button {
+            display: inline-block;
+            padding: 12px 32px;
+            background: white;
+            color: #6200ea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .hero-button:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+        }
+        .services {
+            padding: 80px 0;
+            background: #f5f5f5;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 40px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: #212121;
+        }
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #757575;
+            margin-bottom: 48px;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 32px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6200ea, #9c27b0);
+        }
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+        }
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #6200ea 0%, #9c27b0 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(98,0,234,0.3);
+        }
+        .card h3 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: #212121;
+        }
+        .card p {
+            color: #616161;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        .card ul {
+            list-style: none;
+        }
+        .card li {
+            color: #757575;
+            padding: 8px 0;
+            padding-left: 28px;
+            position: relative;
+        }
+        .card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #6200ea;
+            font-weight: bold;
+        }
+        .cta-section {
+            background: linear-gradient(135deg, #6200ea 0%, #9c27b0 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin: 80px 0 0 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        .cta-section h2 {
+            font-size: 40px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+        .cta-section p {
+            font-size: 18px;
+            margin-bottom: 32px;
+            opacity: 0.95;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 14px 40px;
+            background: white;
+            color: #6200ea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .cta-button:hover {
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+        }
+        footer {
+            background: #212121;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 32px 0;
+        }
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 36px; }
+            .services-grid { grid-template-columns: 1fr; }
+            nav ul { flex-direction: column; gap: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>BaseTen</h1>
+                <nav>
+                    <ul>
+                        <li><a href="#services"><span>Services</span></a></li>
+                        <li><a href="#about"><span>About</span></a></li>
+                        <li><a href="#contact"><span>Contact</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Infrastructure Consulting Excellence</h2>
+            <p>Modernize your infrastructure with expert consulting in SDLC, containerization, cloud migration, security, self-hosted solutions, and seamless integrations.</p>
+            <a href="#contact" class="hero-button">Get Started</a>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Comprehensive infrastructure solutions for modern businesses</p>
+            <div class="services-grid">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>SDLC Optimization</h3>
+                    <p>Streamline your software development lifecycle with modern automation and best practices.</p>
+                    <ul>
+                        <li>CI/CD Pipeline Implementation</li>
+                        <li>DevOps Integration</li>
+                        <li>Automated Testing Frameworks</li>
+                        <li>Release Management</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📦</div>
+                    <h3>Containerization</h3>
+                    <p>Transform applications with Docker and Kubernetes orchestration solutions.</p>
+                    <ul>
+                        <li>Docker Configuration</li>
+                        <li>Kubernetes Cluster Setup</li>
+                        <li>Container Registry Management</li>
+                        <li>Microservices Architecture</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">☁️</div>
+                    <h3>Cloud Migration</h3>
+                    <p>Seamless transition to cloud infrastructure with minimal downtime.</p>
+                    <ul>
+                        <li>AWS / Azure / GCP Migration</li>
+                        <li>Hybrid Cloud Solutions</li>
+                        <li>Cloud Cost Optimization</li>
+                        <li>Performance Tuning</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔒</div>
+                    <h3>Security Services</h3>
+                    <p>Enterprise-grade security implementation and compliance management.</p>
+                    <ul>
+                        <li>Security Audits & Assessment</li>
+                        <li>Penetration Testing</li>
+                        <li>Compliance (SOC2, ISO)</li>
+                        <li>Threat Monitoring & Response</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🖥️</div>
+                    <h3>Self-Hosted Solutions</h3>
+                    <p>On-premise infrastructure deployment with complete control.</p>
+                    <ul>
+                        <li>Private Cloud Infrastructure</li>
+                        <li>Server Configuration</li>
+                        <li>Network Architecture Design</li>
+                        <li>Backup & Disaster Recovery</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔄</div>
+                    <h3>System Integration</h3>
+                    <p>Connect your platforms and automate workflows seamlessly.</p>
+                    <ul>
+                        <li>API Development & Integration</li>
+                        <li>Workflow Automation</li>
+                        <li>Third-Party Service Integration</li>
+                        <li>Data Pipeline Construction</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2>Ready to Transform Your Infrastructure?</h2>
+            <p>Let's discuss how we can help modernize your development workflows</p>
+            <a href="mailto:hello@baseten.com" class="cta-button">Contact Us</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 BaseTen - Infrastructure Consulting - All Rights Reserved</p>
+        </div>
+    </footer>
+</body>
+</html>
